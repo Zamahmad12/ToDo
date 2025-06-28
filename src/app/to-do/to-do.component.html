@@ -1,0 +1,75 @@
+<div class="to-do-container">
+    <nz-table #basicTable [nzData]="Form" [nzSize]="'small'" [nzShowPagination]="false">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Course</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of Form; let i = index"> 
+                <td>{{ item.Name}}</td>
+                <td>{{ item.Email}}</td>
+                <td>{{ item.Password }}</td>
+                <td>{{ item.Course }}</td>
+                <td>
+                    <button (click)="showModal(i)"nz-button nzType="primary"><span nz-icon nzType="edit"
+                        nzTheme="outline"></span></button>
+                    <button (click)="delete(i)"nz-button nzType="primary" nzDanger><span nz-icon nzType="delete"
+                        nzTheme="outline"></span></button>
+                  </td>
+            </tr>
+        </tbody>
+    </nz-table>
+    <div class="btn-container">
+        <button nz-button (click)="addForm()" nzType="primary" [nzSize]="'small'"><span nz-icon
+                nzType="plus"></span></button>
+    </div>
+  </div>
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="Form Edit" (nzOnCancel)="EditCancel()" (nzOnOk)="Ok()">
+    <ng-container *nzModalContent>
+      <input nz-input placeholder="Please Enter name" (ngModelChange)="onValueCahnge($event, 'Name')"
+        [ngModel]="selectedForm.Name" type="text" />
+      <input nz-input placeholder="Please enter Email" (ngModelChange)="onValueCahnge($event, 'Email')"
+        [ngModel]="selectedForm.Email" type="text" />
+      <input nz-input placeholder="Please enter Password" (ngModelChange)="onValueCahnge($event, 'Password')"
+        [ngModel]="selectedForm.Password" type="text" />
+      <input nz-input placeholder="Please enter Course" (ngModelChange)="onValueCahnge($event, 'Course')"
+        [ngModel]="selectedForm.Course" type="text" />
+    </ng-container>
+  </nz-modal>
+  
+  <nz-modal [(nzVisible)]="isAddVisible" nzTitle="Student Form" (nzOnCancel)="Cancel()"
+    (nzOnOk)="AddOk()">
+    <ng-container *nzModalContent>
+        <form nz-form [formGroup]="studentForm" (ngSubmit)="AddOk()">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="Name">Name</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                    <input nz-input type="text" formControlName="Name" placeholder="Please enter Name" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="Email">Email</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                    <input nz-input type="text" formControlName="Email" placeholder="Please enter Email" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="Password">Password</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                    <input nz-input type="password" formControlName="Password" placeholder="Please enter Password" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="Course">Course</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                    <input nz-input type="text" formControlName="Course" placeholder="Please enter Course" />
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-container>
+  </nz-modal>
